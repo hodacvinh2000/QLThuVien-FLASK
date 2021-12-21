@@ -1,0 +1,74 @@
+{%extends "base.html" %}
+{% block content %}
+{% if trungmasv == 1 %}
+<script>
+    alert("Mã sinh viên bị trùng !")
+</script>
+{% endif %}
+{% if sv != None %}
+<div style="width:500px;border:2px;position:absolute;left:450px;" >
+    <h3 align="center" style="padding-top:10px;"><b>Thông tin sinh viên</b></h3>
+      <div class="form-group">
+        <label for="formGroupExampleInput">Mã sinh viên</label>
+        <input type="text" class="form-control" id="formGroupExampleInput" name="masv" value="{{sv.masv}}" form="sinhvien" required>
+      </div>
+      <input type="hidden" name="masvcu" value="{{sv.masv}}" form="sinhvien" required>
+      <div class="form-group">
+        <label for="formGroupExampleInput2">Họ tên</label>
+        <input type="text" class="form-control" id="formGroupExampleInput" name="hoten" value="{{sv.hoten }}" form="sinhvien" required>
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput2">Địa chỉ</label>
+        <input type="text" class="form-control" id="formGroupExampleInput2" name="diachi" value="{{sv.diachi }}" form="sinhvien" required>
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput2">Ngành</label>
+        <input type="text" class="form-control" id="formGroupExampleInput2" name="nganh" value="{{sv.nganh }}" form="sinhvien" required>
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput2">Khóa</label>
+        <input type="text" class="form-control" id="formGroupExampleInput2" name="khoa" value="{{sv.khoa }}" form="sinhvien" required>
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput2">Số điện thoại</label>  
+        <input type="text" class="form-control" id="formGroupExampleInput2" name="sodt" value="{{sv.sodt }}" form="sinhvien" required>
+      </div>
+      <div class="form-group"> 
+        <input type="submit" class="btn btn-primary" id="formGroupExampleInput2" name="capnhat" value="Cập nhật" form="sinhvien" required>
+      </div>
+</div>
+<form method="post" action="/capnhatsinhvien/{{sv.masv}}" id="sinhvien"></form>
+{% else %}
+<div style="width:500px;border:2px;position:absolute;left:450px;" >
+    <h3 align="center" style="padding-top:10px;"><b>Thông tin sinh viên</b></h3>
+      <div class="form-group">
+        <label for="formGroupExampleInput">Mã sinh viên</label>
+        <input type="text" class="form-control" id="formGroupExampleInput" name="masv"  form="sinhvien" required>
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput2">Họ tên</label>
+        <input type="text" class="form-control" id="formGroupExampleInput" name="hoten"  form="sinhvien" required>
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput2">Địa chỉ</label>
+        <input type="text" class="form-control" id="formGroupExampleInput2" name="diachi"  form="sinhvien" required>
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput2">Ngành</label>
+        <input type="text" class="form-control" id="formGroupExampleInput2" name="nganh"  form="sinhvien" required>
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput2">Khóa</label>
+        <input type="text" class="form-control" id="formGroupExampleInput2" name="khoa"  form="sinhvien" required>
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput2">Số điện thoại</label>  
+        <input type="text" class="form-control" id="formGroupExampleInput2" name="sodt"  form="sinhvien" required>
+      </div>
+      <div class="form-group"> 
+        <input type="submit" class="btn btn-primary" id="formGroupExampleInput2" name="them" value="Thêm" form="sinhvien" required>
+      </div>
+</div>
+<form method="post" action="{{ url_for('themsinhvien') }}" id="sinhvien"></form>
+{% endif %}
+{% endblock %}

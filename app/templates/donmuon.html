@@ -1,0 +1,90 @@
+{%extends "base.html" %}
+{% block content %}
+{% if themdon!=None %}
+<script>
+    alert("Thêm đơn mượn thành công!")
+</script>
+{% endif %}
+{% if xoadon!=None %}
+<script>
+    alert("Xóa đơn mượn thành công!")
+</script>
+{% endif %}
+{% if capnhatdon!=None %}
+<script>
+    alert("Cập nhật đơn mượn thành công!")
+</script>
+{% endif %}
+{% if trasach!=None %}
+<script>
+    alert("Trả sách thành công!")
+</script>
+{% endif %}
+{% if dangmuonsach!=None %}
+<script>
+    alert("Sinh viên đang mượn sách! Trả sách để mượn tiếp!!!")
+</script>
+{% endif %}
+<br>
+<h1 align="center"><b>Danh sách đơn mượn</b></h1>
+<a href="{{ url_for('themdonmuon') }}" style="margin-left: 5px;;"><button class="btn btn-success">Thêm đơn mượn</button></a>
+<div>
+    <form method="post">
+        <div class="form-group" align="right" style="position:absolute; top:136px;right:1px;">
+            <input type="text" name="key" class="form-control" style="width:300px;">
+        </div>
+        <div style="position:absolute; top:136px;right:1px;">
+            <input type="submit" name="tim" value="Tìm" class="btn btn-primary">
+        </div>
+    </form>
+</div>
+<div>
+    <table class="table" style="border: 1px solid #DCDCDC; margin-top: 5px;">
+        <thead class="thead-dark">
+            <th>STT</th>
+            <th>Mã sinh viên</th>
+            <th>Họ tên</th>
+            <th>Tên sách</th>
+            <th>Ngày mượn</th>
+            <th>Hạn trả</th>
+            <th>Trạng thái</th>
+            <th>Action</th>
+        </thead>
+        {% if dsdonmuon|length > 0 %}
+        {% for donmuon in dsdonmuon %}
+        <tbody>
+            <td>{{loop.index}}</td>
+            <td>{{donmuon.masv}}</td>
+            <td>{{donmuon.hoten}}</td>
+            <td>{{donmuon.tensach}}</td>
+            <td>{{donmuon.ngaymuon|format_date("dd/MM/yyyy")}}</td>
+            <td>{{donmuon.hantra|format_date("dd/MM/yyyy")}}</td>
+            <td>{{donmuon.trangthai}}</td>
+            <td>
+                <a href="capnhatdonmuon/{{donmuon.madonmuon}}"><button class="btn btn-primary">Cập nhật</button></a>
+                <button class="btn btn-danger" onclick="xacnhan('{{donmuon.madonmuon}}')">Xóa</button></a>
+                {% if donmuon.trangthai != "Đã trả" %}
+                <button class="btn btn-secondary" onclick="trasach('{{donmuon.madonmuon}}')">Trả sách</button>
+                {% endif %}
+                <script>
+                    function xacnhan(madonmuon){
+                        if(confirm("Bạn có muốn xóa đơn mượn này?") == true){
+                            location.assign("xoadonmuon/"+madonmuon)
+                        }
+                    }
+                    function trasach(madonmuon){
+                        if(confirm("Bạn có muốn trả cuốn sách này?") == true){
+                            location.assign("trasach/"+madonmuon)
+                        }
+                    }
+                </script>
+            </td>
+        </tbody>
+        {% endfor %}
+        {% else %}
+        <div style="position: absolute; top: 250px;left: 530px;"><h4><b>Không tìm thấy đơn mượn !!!</b></h4></div>
+        {% endif %}
+    </table>
+</div>
+
+{% endblock %}

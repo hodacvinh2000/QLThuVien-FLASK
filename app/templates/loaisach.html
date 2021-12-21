@@ -1,0 +1,62 @@
+{%extends "base.html" %}
+{% block content %}
+{% if themloai!=None %}
+<script>
+    alert("Thêm loại sách thành công!")
+</script>
+{% endif %}
+{% if xoaloai!=None %}
+<script>
+    alert("Xóa loại sách thành công!")
+</script>
+{% endif %}
+{% if capnhatloai!=None %}
+<script>
+    alert("Cập nhật loại sách thành công!")
+</script>
+{% endif %}
+<br>
+<h1 align="center"><b>Danh sách loại sách</b></h1>
+<a href="{{ url_for('themloaisach') }}" style="margin-left: 5px;;"><button class="btn btn-success">Thêm loại sách</button></a>
+<div>
+    <form method="post">
+        <div class="form-group" align="right" style="position:absolute; top:136px;right:1px;">
+            <input type="text" name="key" class="form-control" style="width:300px;">
+        </div>
+        <div style="position:absolute; top:136px;right:1px;">
+            <input type="submit" name="tim" value="Tìm" class="btn btn-primary">
+        </div>
+    </form>
+</div>
+<div>
+    <table class="table" style="border: 1px solid #DCDCDC; margin-top: 5px;">
+        <thead class="thead-dark">
+            <th>STT</th>
+            <th>Tên loại sách</th>
+            <th>Action</th>
+        </thead>
+        {% if dsloaisach|length > 0 %}
+        {% for loaisach in dsloaisach %}
+        <tbody>
+            <td>{{loop.index}}</td>
+            <td>{{loaisach.tenloai}}</td>
+            <td>
+                <a href="capnhatloaisach/{{loaisach.maloai}}"><button class="btn btn-primary">Cập nhật</button></a>
+                <button class="btn btn-danger" onclick="xacnhan('{{loaisach.maloai}}')">Xóa</button></a>
+                <script>
+                    function xacnhan(maloaisach){
+                        if(confirm("Xóa loại sách có thể xóa sách của loại sách này. Bạn có muốn xóa loại sách này?") == true){
+                            location.assign("xoaloaisach/"+maloaisach)
+                        }
+                    }
+                </script>
+            </td>
+        </tbody>
+        {% endfor %}
+        {% else %}
+        <div style="position: absolute; top: 250px;left: 530px;"><h4><b>Không tìm thấy loại sách !!!</b></h4></div>
+        {% endif %}
+    </table>
+</div>
+
+{% endblock %}

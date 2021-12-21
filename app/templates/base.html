@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<meta charset="utf-8">
+  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Fa fa icon -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+<style>
+  body {
+      background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2EP30ihM3Pwi-6Bl6KHDl92o4zbxckNr1dA&usqp=CAU");
+  }
+</style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor02">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Trang chủ</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="{{ url_for('ds_sinhvien') }}">Sinh viên</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="{{ url_for('ds_sach') }}">Sách</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="{{ url_for('ds_loaisach') }}">Loại sách</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="{{ url_for('ds_donmuon')}}">Đơn mượn</a>
+        </li>
+      </ul>
+        {% if current_user.is_anonymous %}    
+            <div style="position:absolute;right:10px;">
+                <ul class="navbar-nav mr-auto" >
+                    <li class="nav-item active"><a href="#" data-toggle="modal" data-target="#myModal" style="color:white;"><i class="fa fa-sign-in" aria-hidden="true"></i> Đăng nhập</a></li>
+                </ul>
+            </div>
+        {% else %}
+            <div style="padding-right:100px;">
+                <ul class="navbar-nav mr-auto" align="right">
+                <li class="nav-item active" style="color:white;"><a>Xin chào: {{ current_user.tendangnhap }}</a></li>
+                </ul>
+            </div>
+            <div  style="position:absolute;right:10px;">
+                <ul class="navbar-nav mr-auto"  align="right">
+                    <li class="nav-item active"><a href="{{ url_for('logout') }}" style="color:white;"><i class="fa fa-sign-out" aria-hidden="true"></i> Đăng xuất</a></li>
+                </ul>
+            </div>
+        {% endif %}
+
+    </div>
+  </nav>
+<!-- model Đăng nhập -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-sm">
+      	<div class="modal-content">
+			<!-- Modal Header -->
+	    	<div class="modal-header">
+	      	<h4 class="modal-title">Thông tin đăng nhập</h4>
+	      	<button type="button" class="close" data-dismiss="modal">&times;</button>
+	    	</div>
+	    	<!-- Modal body -->
+	    	<div class="modal-body">
+	      	<form method="post" action="{{ url_for('login') }}">
+	         	Tên đăng nhâp: <input type="text" name="tendangnhap" class="form-control"> <br>
+	        	Mật khẩu <input type="password" name="matkhau" class="form-control"> <br>
+	        	<input type="submit" name="dangnhap" value="Đăng nhập" class="btn-primary">
+	      	</form>
+	    	</div>  
+		</div>
+	</div>
+</div>
+{% block content %}{% endblock %}

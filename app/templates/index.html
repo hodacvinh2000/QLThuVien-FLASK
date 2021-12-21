@@ -1,0 +1,11 @@
+{%extends "base.html" %}
+{% block content %}
+{% if dangnhapsai == 1 %}
+<script>
+    alert("Đăng nhập sai!")
+</script>
+{% endif %}
+<h1 style="position: absolute; top: 200px; left: 300px;font-size: 100px;color:darkturquoise; text-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 
+0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;"><b><i>Quản lý thư viện</i></b></h1>
+<img src="https://toplist.vn/images/800px/thu-vien-dep-co-thiet-ke-doc-dao-ai-cung-muon-ghe-chan-mot-lan-147973.jpg" style="width:100%;height: 600px;">
+{% endblock %}

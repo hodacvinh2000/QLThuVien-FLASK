@@ -1,0 +1,71 @@
+{%extends "base.html" %}
+{% block content %}
+{% if themsv!=None %}
+<script>
+    alert("Thêm sinh viên thành công!")
+</script>
+{% endif %}
+{% if xoasv!=None %}
+<script>
+    alert("Xóa sinh viên thành công!")
+</script>
+{% endif %}
+{% if capnhatsv!=None %}
+<script>
+    alert("Cập nhật sinh viên thành công!")
+</script>
+{% endif %}
+<br>
+<h1 align="center"><b>Danh sách sinh viên</b></h1>
+<a href="{{ url_for('themsinhvien') }}" style="margin-left: 5px;;"><button class="btn btn-success">Thêm sinh viên</button></a>
+<div>
+    <form method="post">
+        <div class="form-group" align="right" style="position:absolute; top:136px;right:1px;">
+            <input type="text" name="key" class="form-control" style="width:300px;">
+        </div>
+        <div style="position:absolute; top:136px;right:1px;">
+            <input type="submit" name="tim" value="Tìm" class="btn btn-primary">
+        </div>
+    </form>
+</div>
+<div>
+    <table class="table" style="border: 1px solid #DCDCDC; margin-top: 5px;">
+        <thead class="thead-dark">
+            <th>STT</th>
+            <th>Mã sinh viên</th>
+            <th>Họ tên</th>
+            <th>Địa chỉ</th>
+            <th>Ngành</th>
+            <th>Khóa</th>
+            <th>Số điện thoại</th>
+            <th>Action</th>
+        </thead>
+        {% if dssv|length > 0 %}
+        {% for sv in dssv %}
+        <tbody>
+            <td>{{loop.index}}</td>
+            <td>{{sv.masv}}</td>
+            <td>{{sv.hoten}}</td>
+            <td>{{sv.diachi}}</td>
+            <td>{{sv.nganh}}</td>
+            <td>{{sv.khoa}}</td>
+            <td>{{sv.sodt}}</td>
+            <td>
+                <a href="capnhatsinhvien/{{sv.masv}}"><button class="btn btn-primary">Cập nhật</button></a>
+                <button class="btn btn-danger" onclick="xacnhan('{{sv.masv}}')">Xóa</button></a>
+                <script>
+                    function xacnhan(masv){
+                        if(confirm("Xóa sinh viên có thể xóa đơn mượn của sinh viên đó. Bạn có muốn xóa sinh viên này?") == true){
+                            location.assign("xoasinhvien/"+masv)
+                        }
+                    }
+                </script>
+            </td>
+        </tbody>
+        {% endfor %}
+        {% else %}
+        <div style="position: absolute; top: 250px;left: 530px;"><h4><b>Không tìm thấy sinh viên !!!</b></h4></div>
+        {% endif %}
+    </table>
+</div>
+{% endblock %}

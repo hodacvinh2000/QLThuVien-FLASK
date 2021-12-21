@@ -1,0 +1,72 @@
+{%extends "base.html" %}
+{% block content %}
+{% if themsach!=None %}
+<script>
+    alert("Thêm sách thành công!")
+</script>
+{% endif %}
+{% if xoasach!=None %}
+<script>
+    alert("Xóa sách thành công!")
+</script>
+{% endif %}
+{% if capnhatsach!=None %}
+<script>
+    alert("Cập nhật sách thành công!")
+</script>
+{% endif %}
+<br>
+<h1 align="center"><b>Danh sách sách</b></h1>
+<a href="{{ url_for('themsach') }}" style="margin-left: 5px;;"><button class="btn btn-success">Thêm sách</button></a>
+<div>
+    <form method="post">
+        <div class="form-group" align="right" style="position:absolute; top:136px;right:1px;">
+            <input type="text" name="key" class="form-control" style="width:300px;">
+        </div>
+        <div style="position:absolute; top:136px;right:1px;">
+            <input type="submit" name="tim" value="Tìm" class="btn btn-primary">
+        </div>
+    </form>
+</div>
+<div>
+    <table class="table" style="border: 1px solid #DCDCDC; margin-top: 5px;">
+        <thead class="thead-dark">
+            <th>STT</th>
+            <th>Tên sách</th>
+            <th>Tên loại sách</th>
+            <th>Tác giả</th>
+            <th>Nhà xuất bản</th>
+            <th>Số lượng</th>
+            <th>Giá</th>
+            <th>Action</th>
+        </thead>
+        {% if dssach|length > 0 %}
+        {% for sach in dssach %}
+        <tbody>
+            <td>{{loop.index}}</td>
+            <td>{{sach.tensach}}</td>
+            <td>{{sach.tenloaisach}}</td>
+            <td>{{sach.tacgia}}</td>
+            <td>{{sach.nhaxuatban}}</td>
+            <td>{{sach.soluong}}</td>
+            <td>{{sach.gia}}</td>
+            <td>
+                <a href="capnhatsach/{{sach.masach}}"><button class="btn btn-primary">Cập nhật</button></a>
+                <button class="btn btn-danger" onclick="xacnhan('{{sach.masach}}')">Xóa</button></a>
+                <script>
+                    function xacnhan(masach){
+                        if(confirm("Xóa  sách có thể xóa đơn mượn của  sách này. Bạn có muốn xóa sách này?") == true){
+                            location.assign("xoasach/"+masach)
+                        }
+                    }
+                </script>
+            </td>
+        </tbody>
+        {% endfor %}
+        {% else %}
+        <div style="position: absolute; top: 250px;left: 530px;"><h4><b>Không tìm thấy  sách !!!</b></h4></div>
+        {% endif %}
+    </table>
+</div>
+
+{% endblock %}

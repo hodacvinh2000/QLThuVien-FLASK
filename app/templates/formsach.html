@@ -1,0 +1,83 @@
+{%extends "base.html" %}
+{% block content %}
+{% if trungten == 1 %}
+<script>
+    alert("Tên sách bị trùng !")
+</script>
+{% endif %}
+{% if sach != None %}
+<div style="width:500px;border:2px;position:absolute;left:450px;" >
+    <h3 align="center" style="padding-top:10px;"><b>Thông tin sách</b></h3>
+      <div class="form-group">
+        <label for="formGroupExampleInput">Tên sách</label>
+        <input type="text" class="form-control" id="formGroupExampleInput" name="tensach" value="{{sach.tensach}}" form="sach" required>
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput">Tên loại sách</label>    
+        <select class="form-control" name="maloai" form="sach">
+            <option selected="selected" value="{{sach.maloai}}">{{sach.tenloaisach}}</option>
+            {% for loaisach in dsloaisach %}
+            <option value="{{loaisach.maloai}}">{{loaisach.tenloai}}</option>
+            {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput">Tác giả</label>
+        <input type="text" class="form-control" id="formGroupExampleInput" name="tacgia" value="{{sach.tacgia}}" form="sach" required>
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput">Nhà xuất bản</label>
+        <input type="text" class="form-control" id="formGroupExampleInput" name="nhaxuatban" value="{{sach.nhaxuatban}}" form="sach" required>
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput">Số lượng</label>
+        <input type="number" min="0" class="form-control" id="formGroupExampleInput" name="soluong" value="{{sach.soluong}}" form="sach" required>
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput">Giá</label>
+        <input type="number" class="form-control" id="formGroupExampleInput" name="gia" value="{{sach.gia}}" form="sach" required>
+      </div>
+      <input type="hidden" name="tensachcu" value="{{sach.tensach}}" form="sach">
+      <div class="form-group"> 
+        <input type="submit" class="btn btn-primary" id="formGroupExampleInput2" name="capnhat" value="Cập nhật" form="sach" required>
+      </div>
+</div>
+<form method="post" action="/capnhatsach/{{ sach.masach }}" id="sach"></form>
+{% else %}
+<div style="width:500px;border:2px;position:absolute;left:450px;" >
+  <h3 align="center" style="padding-top:10px;"><b>Thông tin sách</b></h3>
+  <div class="form-group">
+    <label for="formGroupExampleInput">Tên sách</label>
+    <input type="text" class="form-control" id="formGroupExampleInput" name="tensach" form="sach" required>
+  </div>
+  <div class="form-group">
+    <label for="formGroupExampleInput">Tên loại sách</label>
+    <select class="form-control" name="maloai" form="sach">
+        {% for loaisach in dsloaisach %}
+        <option value="{{loaisach.maloai}}">{{loaisach.tenloai}}</option>
+        {% endfor %}
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="formGroupExampleInput">Tác giả</label>
+    <input type="text" class="form-control" id="formGroupExampleInput" name="tacgia" form="sach" required>
+  </div>
+  <div class="form-group">
+    <label for="formGroupExampleInput">Nhà xuất bản</label>
+    <input type="text" class="form-control" id="formGroupExampleInput" name="nhaxuatban"  form="sach" required>
+  </div>
+  <div class="form-group">
+    <label for="formGroupExampleInput">Số lượng</label>
+    <input type="number" min="0" class="form-control" id="formGroupExampleInput" name="soluong"  form="sach" required>
+  </div>
+  <div class="form-group">
+    <label for="formGroupExampleInput">Giá</label>
+    <input type="number" class="form-control" id="formGroupExampleInput" name="gia" form="sach" required>
+  </div>
+  <div class="form-group"> 
+    <input type="submit" class="btn btn-primary" id="formGroupExampleInput2" name="them" value="Thêm" form="sach" required>
+  </div>
+</div>
+<form method="post" action="{{ url_for('themsach') }}" id="sach"></form>
+{% endif %}
+{% endblock %}

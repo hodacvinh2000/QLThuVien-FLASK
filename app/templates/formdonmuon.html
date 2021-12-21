@@ -1,0 +1,84 @@
+{%extends "base.html" %}
+{% block content %}
+{% if hetsach == 1 %}
+<script>
+  alert("Sách này đã hết!!!")
+</script>
+{% endif %}
+{% if donmuon != None %}
+<div style="width:500px;border:2px;position:absolute;left:450px;" >
+    <h3 align="center" style="padding-top:10px;"><b>Thông tin đơn mượn</b></h3>
+      <div class="form-group">
+        <label for="formGroupExampleInput">Mã sinh viên</label>
+        <input type="text" class="form-control" id="formGroupExampleInput" name="masv" value="{{donmuon.masv}}" form="donmuon" required>
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput">Tên sách</label>    
+        <select class="form-control" name="masach" form="donmuon">
+            <option selected="selected" value="{{ donmuon.masach}}">{{donmuon.tensach}}</option>
+            {% for sach in dssach %}
+            {% if sachmasach != donmuon.masach %}
+            <option value="{{sach.masach}}">{{sach.tensach}}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput">Ngày mượn</label>
+        <input type="date" class="form-control" id="ngaymuon" name="ngaymuon" value="{{donmuon.ngaymuon}}" form="donmuon" required>
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput">Hạn trả</label>
+        <input type="date" class="form-control" id="formGroupExampleInput" name="hantra" value="{{donmuon.hantra}}" form="donmuon" required>
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput">Trạng thái</label>
+        <select class="form-control" name="trangthai" form="donmuon">
+            <option selected="selected" value="{{ donmuon.trangthai}}">{{donmuon.trangthai}}</option>
+            {% for tt in trangthai %}
+            {% if tt != donmuon.trangthai %}
+            <option>{{tt}}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+      </div>
+      <input type="hidden" name="trangthaicu" value="{{donmuon.trangthai}}" form="donmuon">
+      <input type="hidden" name="masachcu" value="{{donmuon.masach}}" form="donmuon">
+      <div class="form-group"> 
+        <input type="submit" class="btn btn-primary" id="formGroupExampleInput2" name="capnhat" value="Cập nhật" form="donmuon" required>
+      </div>
+</div>
+<form method="post" action="/capnhatdonmuon/{{ donmuon.madonmuon }}" id="donmuon"></form>
+{% else %}
+<div style="width:500px;border:2px;position:absolute;left:450px;" >
+    <h3 align="center" style="padding-top:10px;"><b>Thông tin đơn mượn</b></h3>
+      <div class="form-group">
+        <label for="formGroupExampleInput">Mã sinh viên</label>
+        <input type="text" class="form-control" id="formGroupExampleInput" name="masv"  form="donmuon" required>
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput">Tên sách</label>    
+        <select class="form-control" name="masach" form="donmuon">
+            {% for sach in dssach %}
+            <option value="{{sach.masach}}">{{sach.tensach}}</option>
+            {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput">Ngày mượn</label>
+        <input type="date" class="form-control" id="ngaymuon" name="ngaymuon"  form="donmuon" required>
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput">Hạn trả</label>
+        <input type="date" class="form-control" id="formGroupExampleInput" name="hantra" form="donmuon" required>
+      </div>
+      <div class="form-group"> 
+        <input type="submit" class="btn btn-primary" id="formGroupExampleInput2" name="them" value="Thêm" form="donmuon" required>
+      </div>
+</div>
+<form method="post" action="{{ url_for('themdonmuon') }}" id="donmuon"></form>
+<script>
+    document.getElementById('ngaymuon').valueAsDate = new Date();
+</script>
+{% endif %}
+{% endblock %}
