@@ -358,22 +358,24 @@ def themdonmuon():
             ngaymuon = date.fromisoformat(ngaymuon)
             hantra = date.fromisoformat(hantra)
             trangthai= "Chưa trả"
+            if sv == None:
+                return render_template('formdonmuon.html', dssach=dssach, donmuon=None,khongcosv=1)
+            else:
+                donmuonsach = donmuon(masv=masv,hoten=sv.hoten,masach=masach,tensach=s.tensach,ngaymuon=ngaymuon,hantra=hantra,trangthai=trangthai)
+                dsdonmuon_sv = donmuon.query.filter(donmuon.masv==masv,donmuon.trangthai!="Đã trả").all()
+                if len(dsdonmuon_sv) > 0:
+                    session['dangmuonsach']=1
+                    return redirect('/donmuon')
+                # kiem tra so luong sach
+                kt_sach = sach.query.filter(sach.masach==masach).first()    
+                if kt_sach.soluong == 0:
+                    return render_template('formdonmuon.html', dssach=dssach, donmuon=None,hetsach=1)
 
-            donmuonsach = donmuon(masv=masv,hoten=sv.hoten,masach=masach,tensach=s.tensach,ngaymuon=ngaymuon,hantra=hantra,trangthai=trangthai)
-            dsdonmuon_sv = donmuon.query.filter(donmuon.masv==masv,donmuon.trangthai!="Đã trả").all()
-            if len(dsdonmuon_sv) > 0:
-                session['dangmuonsach']=1
+                db.session.add(donmuonsach)  
+                kt_sach.soluong -= 1
+                db.session.commit()
+                session['themdon'] = 1
                 return redirect('/donmuon')
-            # kiem tra so luong sach
-            kt_sach = sach.query.filter(sach.masach==masach).first()    
-            if kt_sach.soluong == 0:
-                return render_template('formdonmuon.html', dssach=dssach, donmuon=None,hetsach=1)
-
-            db.session.add(donmuonsach)  
-            kt_sach.soluong -= 1
-            db.session.commit()
-            session['themdon'] = 1
-            return redirect('/donmuon')
         return render_template('formdonmuon.html', dssach=dssach, donmuon=None)
     return render_template('index.html')
 @app.route('/capnhatdonmuon/<madonmuon>', methods=["get","post"])

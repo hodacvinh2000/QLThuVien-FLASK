@@ -5,6 +5,11 @@
   alert("Sách này đã hết!!!")
 </script>
 {% endif %}
+{% if khongcosv == 1 %}
+<script>
+  alert("Không tồn tại sinh viên này!!!")
+</script>
+{% endif %}
 {% if donmuon != None %}
 <div style="width:500px;border:2px;position:absolute;left:450px;" >
     <h3 align="center" style="padding-top:10px;"><b>Thông tin đơn mượn</b></h3>
